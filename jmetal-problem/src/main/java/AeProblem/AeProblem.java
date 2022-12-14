@@ -23,6 +23,7 @@ import org.uma.jmetal.util.binarySet.BinarySet;
 @SuppressWarnings("serial")
 public class AeProblem extends AbstractBinaryProblem {
 	private int bits;
+	private int numberOfStudents;
 	private JSONArray matrix;
 	private List<Integer[]> seeds = new ArrayList<Integer[]>(); 
 	private int seedsUsed = 0;
@@ -43,6 +44,8 @@ public class AeProblem extends AbstractBinaryProblem {
 		 
 		 matrix = (JSONArray) obj;
 		 bits = matrix.size();
+		 JSONArray students = (JSONArray) matrix.get(0);
+		 numberOfStudents = students.size();
 		 greedy();
 		 } catch (FileNotFoundException e) {
 			 e.printStackTrace();
@@ -58,23 +61,59 @@ public class AeProblem extends AbstractBinaryProblem {
 		if(seedsUsed <= maxSeeds) {
 			DefaultBinarySolution seed = new DefaultBinarySolution(Arrays.asList(bits), getNumberOfObjectives());
 			BinarySet bitSet = new BinarySet(bits) ;
-			//int s = 0;
+			int s = 0;
 		    for (int i = 0; i < bits; i++) {
 		      if (seeds.get((seedsUsed + 1) * interval)[i] == 1) {
 		        bitSet.set(i);
-		        //s++;
+		        s++;
 		      } else {
 		        bitSet.clear(i);
 		      }
 		    }
-		    //System.out.println(s);
 			seed.setVariable(0, bitSet);
 			seedsUsed = seedsUsed + 1;
+			//evaluateTest(seed);
 			return seed;
 		}
-		else {			
-		return new DefaultBinarySolution(Arrays.asList(bits), getNumberOfObjectives());
+		else {
+			DefaultBinarySolution sol = new DefaultBinarySolution(Arrays.asList(bits), getNumberOfObjectives());
+			//evaluateTest(sol);
+		return sol;
 		}
+	}
+	
+	public void evaluateTest(BinarySolution solution) {
+		int counterHotspots= 0;
+		int totalDistance = 0;
+		evaluations++;
+		if(evaluations % 150 == 0) {
+			System.out.println(generations);
+			generations++;
+		}
+		BitSet bitset = solution.getVariable(0);
+		int children = ((JSONArray) matrix.get(0)).size();
+		for(int i = 0; i < children; i++) {
+			int minDistance = 1500;
+			for (int j = 0; j < bitset.length(); j++) {
+				if(bitset.get(j)) {					
+					JSONArray row = (JSONArray) matrix.get(j);
+					int distance = ((Long) row.get(i)).intValue();
+					if(distance != -1 && distance < minDistance) {
+						minDistance = distance;
+					}
+					if(i==0) {
+						counterHotspots++;						
+					}
+				}
+			}
+			totalDistance += minDistance;
+		}
+		
+
+		System.out.print(counterHotspots);
+		System.out.print(",");
+		System.out.print((float) totalDistance / numberOfStudents);
+		System.out.println();
 	}
 	
 	 public int getBitsFromVariable(int index) {
@@ -115,11 +154,8 @@ public class AeProblem extends AbstractBinaryProblem {
 			}
 			totalDistance += minDistance;
 		}
-		if(counterHotspots == 36) {
-			System.out.println(totalDistance);
-		}
 		solution.setObjective(0, counterHotspots);
-		solution.setObjective(1, totalDistance);
+		solution.setObjective(1, (float) totalDistance / numberOfStudents);
 	}
 	
 	public boolean isCloser(Long dist1, Long dist2) {

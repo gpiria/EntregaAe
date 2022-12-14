@@ -149,12 +149,13 @@ public class Greedy {
 				}
 				currentArray = minArray;
 				solution[position] = 1;
-				System.out.println("--------------------------------");
+				//System.out.println("--------------------------------");
 				System.out.print(total + 2);
 				System.out.print(",");
-				System.out.print(minDistance);
+				System.out.print((float) minDistance / childrenQuant);
+				System.out.println();
 				//System.out.println(Arrays.toString(solution));
-				System.out.println("--------------------------------");
+				//System.out.println("--------------------------------");
 			}
 		} catch (FileNotFoundException e) {
 			 e.printStackTrace();
