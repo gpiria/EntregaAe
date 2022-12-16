@@ -66,7 +66,7 @@ public class AeNSGAIIRunner extends AbstractAlgorithmRunner {
 
 	    selection = new BinaryTournamentSelection<BinarySolution>();
 	    
-	    int populationSize = 80;
+	    int populationSize = 120;
 	    algorithm = new NSGAIIBuilder<BinarySolution>(problem, crossover, mutation, populationSize)
 	            .setSelectionOperator(selection)
 	            .setMaxEvaluations(20000)
