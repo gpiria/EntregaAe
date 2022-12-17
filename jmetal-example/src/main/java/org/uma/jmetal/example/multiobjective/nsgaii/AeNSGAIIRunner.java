@@ -41,22 +41,19 @@ public class AeNSGAIIRunner extends AbstractAlgorithmRunner {
 		String filePath = new File("").getAbsolutePath();
 		if(args.length == 1) {
 			filename = args[0];
-			referenceParetoFront = filePath.concat("\\").concat("pareto.csv");
+			referenceParetoFront = filePath.concat("\\").concat(".csv");
 		} else if(args.length == 2) {
 			filename = args[0];
 			referenceParetoFront = filePath.concat("\\").concat(args[1]);
 		} else {
-
-			referenceParetoFront = filePath.concat("\\").concat("pareto.csv");
-			filename = "Matrix_combined.json";
+			referenceParetoFront = filePath.concat("\\").concat("pareto_mayor_5.csv");
+			filename = "distancias_mayor_5.json";
 		}
 		BinaryProblem problem;
 		Algorithm<List<BinarySolution>> algorithm;
 	    CrossoverOperator<BinarySolution> crossover;
 	    MutationOperator<BinarySolution> mutation;
 	    BinaryTournamentSelection<BinarySolution> selection;
-	    
-	    
 	    
 	    problem = (BinaryProblem) new AeProblem(filename);
 	    double crossoverProbability = 0.75;
@@ -78,7 +75,7 @@ public class AeNSGAIIRunner extends AbstractAlgorithmRunner {
 	    List<BinarySolution> population = algorithm.getResult();
 	    long computingTime = algorithmRunner.getComputingTime();
 	    
-	    JMetalLogger.logger.info("Total execution time: " + computingTime );
+	    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms" );
 
 	    printFinalSolutionSet(population);
 	    Front referenceFront = new ArrayFront(referenceParetoFront);
@@ -89,15 +86,12 @@ public class AeNSGAIIRunner extends AbstractAlgorithmRunner {
 	    List<PointSolution> normalizedPopulation = FrontUtils
 	            .convertFrontToSolutionList(normalizedFront);
 	    String outputString = "\n" ;
-	    //outputString += "Hypervolume     : " +
-	      //  new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
-	    //outputString += "IGD+            : " +
-	      //      new InvertedGenerationalDistancePlus<BinarySolution>(referenceFront).evaluate(population) + "\n";
-	    //outputString += "Spread          : " +
-	      //      new Spread<BinarySolution>(referenceFront).evaluate(population) + "\n";
-	    outputString += 		        new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
-		outputString += 	            new InvertedGenerationalDistancePlus<BinarySolution>(referenceFront).evaluate(population) + "\n";
-		outputString += 	            new Spread<BinarySolution>(referenceFront).evaluate(population) + "\n";
+	    outputString += "Hypervolume     : " +
+	      new PISAHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation) + "\n";
+	    outputString += "IGD+            : " +
+	          new InvertedGenerationalDistancePlus<BinarySolution>(referenceFront).evaluate(population) + "\n";
+	    outputString += "Spread          : " +
+	          new Spread<BinarySolution>(referenceFront).evaluate(population) + "\n";
 	    System.out.print(outputString);
 	}
 }

@@ -19,7 +19,7 @@ import org.uma.jmetal.util.front.util.FrontNormalizer;
 import org.uma.jmetal.util.front.util.FrontUtils;
 import org.uma.jmetal.util.point.PointSolution;
 
-public class Test {
+public class GreedyMetrics {
 	public static void main(String[] args) throws FileNotFoundException {
 		if(args[0] != "" && args [1] != "") {
 			String filePath = new File("").getAbsolutePath();

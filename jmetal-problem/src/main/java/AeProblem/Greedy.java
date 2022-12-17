@@ -22,12 +22,12 @@ public class Greedy {
 	}
 	public static void main(String[] args) throws Exception {
 		String filename;
+		String filePath = new File("").getAbsolutePath();
 		if(args.length == 1) {
-			String filePath = new File("").getAbsolutePath();
 			filename = filePath.concat("\\").concat(args[0]);
 		}
 		else {	
-			filename = "C:\\Users\\gpiri\\Desktop\\AE\\AE\\Jsons\\distancias_plazas_ninos_inse_menor_5\\Matrix.json";
+			filename = filePath.concat("\\").concat("distancias_mayor_5.csv");
 		}
 		
 		JSONParser parser = new JSONParser();

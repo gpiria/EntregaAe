@@ -28,8 +28,6 @@ public class AeProblem extends AbstractBinaryProblem {
 	private List<Integer[]> seeds = new ArrayList<Integer[]>(); 
 	private int seedsUsed = 0;
 	private int maxSeeds = 25;
-	private int evaluations = 0;
-	private int generations = 1;
 	
 	public AeProblem(String filename) throws Exception {
 		setNumberOfVariables(1);
@@ -72,49 +70,14 @@ public class AeProblem extends AbstractBinaryProblem {
 		    }
 			seed.setVariable(0, bitSet);
 			seedsUsed = seedsUsed + 1;
-			//evaluateTest(seed);
 			return seed;
 		}
 		else {
 			DefaultBinarySolution sol = new DefaultBinarySolution(Arrays.asList(bits), getNumberOfObjectives());
-			//evaluateTest(sol);
 		return sol;
 		}
 	}
 	
-	public void evaluateTest(BinarySolution solution) {
-		int counterHotspots= 0;
-		int totalDistance = 0;
-		evaluations++;
-		if(evaluations % 150 == 0) {
-			System.out.println(generations);
-			generations++;
-		}
-		BitSet bitset = solution.getVariable(0);
-		int children = ((JSONArray) matrix.get(0)).size();
-		for(int i = 0; i < children; i++) {
-			int minDistance = 1500;
-			for (int j = 0; j < bitset.length(); j++) {
-				if(bitset.get(j)) {					
-					JSONArray row = (JSONArray) matrix.get(j);
-					int distance = ((Long) row.get(i)).intValue();
-					if(distance != -1 && distance < minDistance) {
-						minDistance = distance;
-					}
-					if(i==0) {
-						counterHotspots++;						
-					}
-				}
-			}
-			totalDistance += minDistance;
-		}
-		
-
-		System.out.print(counterHotspots);
-		System.out.print(",");
-		System.out.print((float) totalDistance / numberOfStudents);
-		System.out.println();
-	}
 	
 	 public int getBitsFromVariable(int index) {
 		if (index != 0) {
@@ -131,11 +94,6 @@ public class AeProblem extends AbstractBinaryProblem {
 	public void evaluate(BinarySolution solution) {
 		int counterHotspots= 0;
 		int totalDistance = 0;
-		evaluations++;
-		if(evaluations % 80 == 0) {
-			System.out.println(generations);
-			generations++;
-		}
 		BitSet bitset = solution.getVariable(0);
 		int children = ((JSONArray) matrix.get(0)).size();
 		for(int i = 0; i < children; i++) {
