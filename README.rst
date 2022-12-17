@@ -7,9 +7,9 @@ El Runner de NSGA se encuentra en jmetal-example, en el package org.uma.jmetal.e
 
 En jmetal-problem, en el package AeProblem, se encuentran la implementación de la clase problema (AeProblem.java), la implementación del algoritmo Greedy (Greedy.java) y la implementación del cálculo de métricas dados dos csv, usado para el caso del algoritmo Greedy (GreedyMetrics.java).
 
-El algoritmo Greedy toma como argumento la instancia a ser ejecutada.
+El algoritmo Greedy toma como argumento la instancia a ser ejecutada. Si no se envían argumentos, toma la instancia Default.
 
-GreedyMetrics toma como primer argumento el frente de Pareto y como segundo el resultado del algoritmo Greedy.
+GreedyMetrics toma como primer argumento el frente de Pareto y como segundo el resultado del algoritmo Greedy. Deven serle provistos argumentos.
 
 Archivos:
     Instancias:
