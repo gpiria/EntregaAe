@@ -2,7 +2,7 @@ Instrucciones
 ==========================
 En un nuevo workspace de Eclipse, importar el proyecto como un proyecto Maven.
 
-Se debe agregar en le classpath de los archivos a ejecutar el jar: json-simple-1.1.1.jar para poder leer los archivos json que contienen las instancias.
+Se debe agregar en el classpath de los archivos a ejecutar el jar: json-simple-1.1.1.jar que se encuentra en la carpeta base del repositorio (se adjunta por las dudas el link de descarga: https://code.google.com/archive/p/json-simple/downloads) para poder leer los archivos json que contienen las instancias.
 El Runner de NSGA se encuentra en jmetal-example, en el package org.uma.jmetal.example.multiobjective.nsgaii, con el nombre AeNSGAIIRunner.java. El primer argumento es la instancia que se tomará, el segundo el frente de Pareto con el que se comparará. Puede ejecutarse sin argumentos, tomando los defaults.
 
 En jmetal-problem, en el package AeProblem, se encuentran la implementación de la clase problema (AeProblem.java), la implementación del algoritmo Greedy (Greedy.java) y la implementación del cálculo de métricas dados dos csv, usado para el caso del algoritmo Greedy (GreedyMetrics.java).
