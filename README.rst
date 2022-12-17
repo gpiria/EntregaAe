@@ -1,52 +1,32 @@
-jMetal project Web site
+Instrucciones
 ==========================
-.. image:: https://travis-ci.org/jMetal/jMetal.svg?branch=master
-    :alt: Build Status
-    :target: https://travis-ci.org/jMetal/jMetal
+En un nuevo workspace de Eclipse, importar el proyecto como un proyecto Maven.
 
-.. image:: https://readthedocs.org/projects/jmetal/badge/?version=latest
-   :alt: Documentation Status
-   :target: https://jmetal.readthedocs.io/?badge=latest
+Se debe agregar en le classpath de los archivos a ejecutar el jar: json-simple-1.1.1.jar para poder leer los archivos json que contienen las instancias.
+El Runner de NSGA se encuentra en jmetal-example, en el package org.uma.jmetal.example.multiobjective.nsgaii, con el nombre AeNSGAIIRunner.java. El primer argumento es la instancia que se tomará, el segundo el frente de Pareto con el que se comparará. Puede ejecutarse sin argumentos, tomando los defaults.
 
-jMetal is a Java-based framework for multi-objective optimization with metaheuristics. The current stable version is 5.10 (https://github.com/jMetal/jMetal/tree/jmetal-5.10), which is based on the description of jMetal 5 included in the paper "Redesigning the jMetal Multi-Objective Optimization Framework" (http://dx.doi.org/10.1145/2739482.2768462), presented at GECCO 2015.
+En jmetal-problem, en el package AeProblem, se encuentran la implementación de la clase problema (AeProblem.java), la implementación del algoritmo Greedy (Greedy.java) y la implementación del cálculo de métricas dados dos csv, usado para el caso del algoritmo Greedy (GreedyMetrics.java).
 
-jMetal is implemented in Java 11 and it is a Maven project structured in six sub-projects:
+El algoritmo Greedy toma como argumento la instancia a ser ejecutada.
 
+GreedyMetrics toma como primer argumento el frente de Pareto y como segundo el resultado del algoritmo Greedy.
 
-+------------------+-----------------------------------+
-| Sub-project      |  Contents                         | 
-+==================+===================================+
-| jmetal-core      |  Core classes                     |
-+------------------+-----------------------------------+
-| jmetal-solution  |  Solution encodings               |
-+------------------+-----------------------------------+
-| jmetal-algorithm |  Algorithm implementations        |
-+------------------+-----------------------------------+
-| jmetal-problem   |  Benchmark problems               |
-+------------------+-----------------------------------+
-| jmetal-example   |  Examples                         |
-+------------------+-----------------------------------+
-| jmetal-lab       |  Experimentation                  |
-+------------------+-----------------------------------+
-| jmetal-auto      |  Auto configuration               |
-+------------------+-----------------------------------+
-
-
-Changelog
----------
-
-* [7/15/2020] `Automatic generation of HTML pages <https://jmetal.readthedocs.io/en/latest/experimentation.html#generation-of-html-pages>`_. summarizing the results of experimental studies. Contributed by Javier Pérez Abad.
-
-* [7/14/2020] New experiment component: `GenerateFriedmanHolmTestTables <https://github.com/jMetal/jMetal/blob/master/jmetal-lab/src/main/java/org/uma/jmetal/lab/experiment/component/impl/GenerateFriedmanHolmTestTables.java>`_. Contributed by Javier Pérez Abad.
-
-* [3/19/2020] New quality indicator: `NormalizedHypervolume <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/qualityindicator/impl/NormalizedHypervolume.java>`_.
-
-* [3/19/2020] The jMetal project adopts Java 11.
-
-* [2/11/2020] All the files containing Pareto front approximations and weight vectors have been moved to the ``resources`` folder, located in root project directory.
-
-* [1/23/2020] A solution encoding for defining solution having mixed internal representations has been developed using class `CompositeSolution <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/solution/compositesolution/CompositeSolution.java>`_. This class acts as solution container, so their variables are solutions of any kind. Variation operators for this class have been developed (classes `CompositeCrossover <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/operator/crossover/impl/CompositeCrossover.java>`_ and `CompositeMutation <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/operator/mutation/impl/CompositeMutation.java>`_). An example of configuring and running NSGA-II to solve a problem using this encoding is available in class `NSGAIIWithMixedSolutionEncodingExample <https://github.com/jMetal/jMetal/blob/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/NSGAIIWithMixedSolutionEncodingExample.java>`_.  Any feedback about this new feature is welcome.
-
-* [12/10/2019] Merge non dominated sorting algorithm (contributed by Javier Moreno), described in `"Merge Non-Dominated Sorting Algorithm for Many-Objective Optimization" <https://arxiv.org/abs/1809.06106>`_ . The code is included in (class `org.uma.jmetal.component.ranking.MergeNonDominatedSortRanking <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/component/ranking/impl/MergeNonDominatedSortRanking.java>`_). An example of using this class in NSGA-II is contained in `NSGAIIWithMNDSRankingExample <https://github.com/jMetal/jMetal/blob/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/NSGAIIWithExperimentalNDSAlgorithmExample.java>`_.
-
-* [12/02/2019] Experimental non dominated sorting algorithm (contributed by Maxim Buzdalov). The code is included in (class `org.uma.jmetal.component.ranking.ExperimentalFastNonDominanceRanking <https://github.com/jMetal/jMetal/blob/master/jmetal-core/src/main/java/org/uma/jmetal/component/ranking/impl/ExperimentalFastNonDominanceRanking.java>`_). An example of using this class in NSGA-II is contained in `NSGAIIWithExperimentalNDSAlgorithmExample <https://github.com/jMetal/jMetal/blob/master/jmetal-example/src/main/java/org/uma/jmetal/example/multiobjective/nsgaii/NSGAIIWithExperimentalNDSAlgorithmExample.java>`_.
+Archivos:
+    Instancias:
+        * distancias_mayor_5 (Default) - Instancia utilizada en la configuración paramétrica, tomando los barrios con INSE mayor a 5
+        * distancias_menor_5 - Instancia tomando los barrios con INSE menor a 5
+        * distancias_combinado - Instancia tomando barrios tanto con INSE mayor a 5 como con INSE menor a 5
+        * distancias_rand - Instancia tomando distancias aleatorias entre plazas y estudiantes
+    Frentes:
+        * pareto_mayor_5 (Default) - Frente aproximado de la instancia distancias_mayor_5
+        * pareto_menor_5 - Frente aproximado de la instancia distancias_menor_5
+        * pareto_combinado - Frente aproximado de la instancia distancias_combinado
+        * pareto_rand - Frente aproximado de la instancia distancias_rand
+    Soluciones de Greedy:
+        * solución_greedy_mayor_5 - Solución del greedy para la instancia distancias_mayor_5
+        * solución_greedy_menor_5 - Solución del greedy para la instancia distancias_menor_5
+        * solución_greedy_combinado - Solución del greedy para la instancia distancias_combinado
+        * solución_greedy_rand - Solución del greedy para la instancia distancias_rand
+        
+Nota:
+    El trabajo fue realizado en Windows 10, por lo que para que funcione en Linux, puede que haya que cambiar el direccionamiento en el filesystem de folder\file a folder/file en las variables filename de los archivos.
