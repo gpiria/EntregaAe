@@ -41,7 +41,7 @@ public class AeNSGAIIRunner extends AbstractAlgorithmRunner {
 		String filePath = new File("").getAbsolutePath();
 		if(args.length == 1) {
 			filename = args[0];
-			referenceParetoFront = filePath.concat("\\").concat(".csv");
+			referenceParetoFront = filePath.concat("\\").concat("pareto_mayor_5.csv");
 		} else if(args.length == 2) {
 			filename = args[0];
 			referenceParetoFront = filePath.concat("\\").concat(args[1]);
